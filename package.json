@@ -1,0 +1,20 @@
+{
+  "name": "tanmaysaachi",
+  "private": true,
+  "description": "Tanmaysaachi Mahila Empower Foundation web platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace @tanmaysaachi/web",
+    "build": "npm run build --workspace @tanmaysaachi/web",
+    "start": "npm run start --workspace @tanmaysaachi/web",
+    "lint": "npm run lint --workspace @tanmaysaachi/web",
+    "typecheck": "npm run typecheck --workspace @tanmaysaachi/web",
+    "test:e2e": "npm run test:e2e --workspace @tanmaysaachi/web"
+  }
+}

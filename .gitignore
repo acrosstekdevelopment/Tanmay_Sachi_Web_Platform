@@ -1,0 +1,39 @@
+# dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# builds
+build/
+dist/
+*.tsbuildinfo
+
+# environment and secrets: never commit
+.env
+.env.*
+!.env.example
+*service-account*.json
+*-credentials.json
+gcp-*.json
+
+# testing
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# local tooling (Claude Code launch config, editor state)
+.claude/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# logs
+npm-debug.log*
+*.log
