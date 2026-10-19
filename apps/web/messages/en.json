@@ -1,0 +1,96 @@
+{
+  "Meta": {
+    "siteName": "Tanmaysaachi Mahila Empower Foundation",
+    "description": "We work with communities, companies and government institutions to widen access to education, skills, health and livelihoods, with women's economic independence as our founding focus."
+  },
+  "Language": {
+    "switchToHindi": "Read this page in Hindi",
+    "switchToEnglish": "Read this page in English",
+    "fallbackNotice": "This page is not yet available in Hindi. You are reading the English version.",
+    "fallbackLink": "Open the English page"
+  },
+  "NotFound": {
+    "home": "Home",
+    "crumb": "Page not found",
+    "title": "We couldn't find that page.",
+    "lede": "The address may be mistyped, or the page may have moved. These are the places most people are looking for.",
+    "schemes": "Schemes and deadlines",
+    "knowledge": "Knowledge base",
+    "ask": "Ask a question"
+  },
+  "Shell": {
+    "skipToContent": "Skip to content",
+    "mainNav": "Main",
+    "donate": "Donate",
+    "nav": {
+      "work": "Our work",
+      "projects": "Projects",
+      "schemes": "Schemes",
+      "knowledge": "Knowledge",
+      "partner": "Partner",
+      "accountability": "Accountability",
+      "about": "About"
+    },
+    "mobile": {
+      "openMenu": "Open menu",
+      "menu": "Menu",
+      "close": "Close",
+      "searchLabel": "Search",
+      "searchPlaceholder": "Ask about schemes, training, help…",
+      "voice": "Speak your question",
+      "chipSchemesForWomen": "Schemes for women",
+      "chipLoans": "Loans without collateral",
+      "chipHowToApply": "How to apply",
+      "chipTrainingNearMe": "Training near me"
+    },
+    "drawer": {
+      "ourWork": "Our work",
+      "allPillars": "All four pillars",
+      "womensIndependence": "Women's economic independence",
+      "projects": "Projects",
+      "findHelp": "Find help",
+      "schemes": "Government schemes and deadlines",
+      "knowledge": "Knowledge base",
+      "ask": "Ask a question",
+      "workWithUs": "Work with us",
+      "csr": "Corporate and CSR",
+      "government": "Government and institutions",
+      "volunteer": "Volunteer or contribute",
+      "about": "About",
+      "story": "Our story and team",
+      "accountability": "Accountability",
+      "contact": "Contact"
+    },
+    "tabs": {
+      "home": "Home",
+      "schemes": "Schemes",
+      "ask": "Ask",
+      "learn": "Learn",
+      "give": "Give"
+    },
+    "footer": {
+      "fcra": "FCRA: not registered",
+      "ourWork": "Our work",
+      "allPillars": "All four pillars",
+      "womensIndependence": "Women's independence",
+      "projects": "Projects",
+      "howWeWork": "How we work",
+      "findHelp": "Find help",
+      "schemes": "Schemes and updates",
+      "knowledge": "Knowledge base",
+      "ask": "Ask a question",
+      "callback": "Request a callback",
+      "accountability": "Accountability",
+      "registrations": "Registrations",
+      "governance": "Governance",
+      "financials": "Financials",
+      "unproven": "What we haven't proven",
+      "grievance": "Grievance redressal",
+      "copyright": "© 2026 Tanmaysaachi Mahila Empower Foundation",
+      "privacy": "Privacy",
+      "donationPolicy": "Donation policy",
+      "refund": "Refund",
+      "terms": "Terms"
+    }
+  }
+}

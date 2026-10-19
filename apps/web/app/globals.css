@@ -361,6 +361,8 @@ footer li{padding:5px 0;font-size:15px}
   --sans:var(--font-inter-tight),"Inter Tight",system-ui,-apple-system,sans-serif;
 }
 :lang(hi){font-family:var(--font-devanagari),var(--sans)}
+/* English content inside a Hindi page (fallback) keeps the design's font. */
+[lang="en"]{font-family:var(--sans)}
 
 /* No horizontal scroll from 360px up (BUILD_GUIDE §4). `clip` keeps
    position:sticky working; older engines fall back to hidden on <html>. */
@@ -377,6 +379,20 @@ html,body{max-width:100vw}
    mockup's own mobile `.four{grid-template-columns:1fr}` and overflowed at 390px.
    Five columns on the web layout, one on mobile, as that rule intends. */
 @media (min-width:820px){.four.five{grid-template-columns:repeat(5,1fr)}}
+
+/* Language switch (Agreement cl. 3.2). The mockup's `.lang` was a <span>; as a
+   link inside `.webnav` it would pick up the nav link styles, so restore the
+   pill exactly, then add a hover state like `.chip`. */
+.webnav a.lang{font-size:13.5px;font-weight:400;color:var(--ink50);padding:3px 8px}
+.webnav a.lang::after{content:none}
+.lang:hover,.webnav a.lang:hover{border-color:var(--coral-ink);color:var(--coral-ink)}
+
+/* Hindi fallback notice, shown only on /hi pages without Hindi content.
+   Built from the `.ansnote` vocabulary (coral wash, coral ink). */
+.langnote{background:var(--coral-wash);border-bottom:1px solid rgba(232,70,46,.25);
+  color:var(--coral-ink);font-size:13.5px;line-height:1.5;padding:10px 0}
+.langnote .wrap{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+.langnote .tlink{font-size:13.5px}
 
 /* Skip link (WCAG 2.1 AA, TDD §5.6): invisible until focused. */
 .skip{position:absolute;left:12px;top:-60px;z-index:300;background:var(--ink);color:#fff;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 // Ask page example chips: as in the mockup (runAsk(q, 1)), they go to the
 // home page Ask box and show the illustrative answer for that question.
@@ -21,7 +21,7 @@ export function AskJumpChips() {
           type="button"
           className="chip"
           lang={ex.lang}
-          onClick={() => router.push(`/?ask=${encodeURIComponent(ex.q)}`)}
+          onClick={() => router.push({ pathname: "/", query: { ask: ex.q } })}
         >
           {ex.label}
         </button>

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react";
 
 /*
@@ -13,7 +13,7 @@ function cx(...parts: Array<string | false | null | undefined>) {
   return parts.filter(Boolean).join(" ");
 }
 
-/** Internal routes use next/link; "#" and in-page anchors stay plain <a>. */
+/** Internal routes use the locale-aware Link (stays in /en or /hi); "#" and in-page anchors stay plain <a>. */
 export function SmartLink({ href, ...rest }: ComponentPropsWithoutRef<"a"> & { href: string }) {
   if (href.startsWith("/")) return <Link href={href} {...rest} />;
   return <a href={href} {...rest} />;

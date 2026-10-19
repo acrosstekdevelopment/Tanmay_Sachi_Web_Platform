@@ -15,6 +15,7 @@
     "start": "npm run start --workspace @tanmaysaachi/web",
     "lint": "npm run lint --workspace @tanmaysaachi/web",
     "typecheck": "npm run typecheck --workspace @tanmaysaachi/web",
-    "test:e2e": "npm run test:e2e --workspace @tanmaysaachi/web"
+    "test:e2e": "npm run test:e2e --workspace @tanmaysaachi/web",
+    "i18n:check": "npm run i18n:check --workspace @tanmaysaachi/web --"
   }
 }

@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState, type FormEvent, type MouseEvent } from "react";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { Button, Chip } from "@/components/ui/primitives";
 import { Brand } from "@/components/ui/logo";
+import { LangSwitch } from "./lang-switch";
 
 // `.mhead` (mobile top bar, search, chip strip) and `.drawer` (menu), below 820px.
 // Behaviour from the mockup script: burger opens; Close, scrim tap and link
@@ -13,6 +14,7 @@ export function MobileNav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const t = useTranslations("Shell");
 
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
@@ -39,13 +41,11 @@ export function MobileNav() {
           <Link className="brand" href="/">
             <Brand size={28} />
           </Link>{" "}
-          <span className="lang" lang="hi">
-            हिं
-          </span>{" "}
+          <LangSwitch short />{" "}
           <button
             className="mburger"
             id="burger"
-            aria-label="Open menu"
+            aria-label={t("mobile.openMenu")}
             aria-expanded={open}
             aria-controls="drawer"
             onClick={() => setOpen(true)}
@@ -61,8 +61,8 @@ export function MobileNav() {
               <circle cx="11" cy="11" r="7" />
               <path d="m20 20-3.6-3.6" />
             </svg>{" "}
-            <input id="mq" placeholder="Ask about schemes, training, help…" aria-label="Search" />{" "}
-            <button type="button" className="mvoice" aria-label="Speak your question">
+            <input id="mq" placeholder={t("mobile.searchPlaceholder")} aria-label={t("mobile.searchLabel")} />{" "}
+            <button type="button" className="mvoice" aria-label={t("mobile.voice")}>
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#C6321F" strokeWidth="1.7" strokeLinecap="round">
                 <rect x="9" y="2.5" width="6" height="11" rx="3" />
                 <path d="M5 11a7 7 0 0 0 14 0M12 18v3.5" />
@@ -71,37 +71,37 @@ export function MobileNav() {
           </form>
         </div>
         <div className="mstrip">
-          <Chip href="/schemes">Schemes for women</Chip>{" "}
-          <Chip href="/schemes">Loans without collateral</Chip>{" "}
-          <Chip href="/knowledge">How to apply</Chip>{" "}
-          <Chip href="/projects">Training near me</Chip>
+          <Chip href="/schemes">{t("mobile.chipSchemesForWomen")}</Chip>{" "}
+          <Chip href="/schemes">{t("mobile.chipLoans")}</Chip>{" "}
+          <Chip href="/knowledge">{t("mobile.chipHowToApply")}</Chip>{" "}
+          <Chip href="/projects">{t("mobile.chipTrainingNearMe")}</Chip>
         </div>
       </div>
 
       <div className={open ? "drawer open" : "drawer"} id="drawer" onClick={onDrawerClick}>
-        <div className="drawer-in" role="dialog" aria-modal="true" aria-label="Menu">
+        <div className="drawer-in" role="dialog" aria-modal="true" aria-label={t("mobile.menu")}>
           <Button ghost sm id="drawerClose" style={{ float: "right" }} onClick={() => setOpen(false)}>
-            Close
+            {t("mobile.close")}
           </Button>
-          <h4>Our work</h4>
-          <Link href="/work">All four pillars</Link>{" "}
-          <Link href="/work/womens-economic-independence">Women&apos;s economic independence</Link>{" "}
-          <Link href="/projects">Projects</Link>
-          <h4>Find help</h4>
-          <Link href="/schemes">Government schemes and deadlines</Link>{" "}
-          <Link href="/knowledge">Knowledge base</Link>{" "}
-          <Link href="/ask">Ask a question</Link>
-          <h4>Work with us</h4>
-          <Link href="/partner">Corporate and CSR</Link>{" "}
-          <Link href="/partner">Government and institutions</Link>{" "}
-          <Link href="/partner">Volunteer or contribute</Link>
-          <h4>About</h4>
-          <Link href="/about">Our story and team</Link>{" "}
-          <Link href="/accountability">Accountability</Link>{" "}
-          <Link href="/contact">Contact</Link>
+          <h4>{t("drawer.ourWork")}</h4>
+          <Link href="/work">{t("drawer.allPillars")}</Link>{" "}
+          <Link href="/work/womens-economic-independence">{t("drawer.womensIndependence")}</Link>{" "}
+          <Link href="/projects">{t("drawer.projects")}</Link>
+          <h4>{t("drawer.findHelp")}</h4>
+          <Link href="/schemes">{t("drawer.schemes")}</Link>{" "}
+          <Link href="/knowledge">{t("drawer.knowledge")}</Link>{" "}
+          <Link href="/ask">{t("drawer.ask")}</Link>
+          <h4>{t("drawer.workWithUs")}</h4>
+          <Link href="/partner">{t("drawer.csr")}</Link>{" "}
+          <Link href="/partner">{t("drawer.government")}</Link>{" "}
+          <Link href="/partner">{t("drawer.volunteer")}</Link>
+          <h4>{t("drawer.about")}</h4>
+          <Link href="/about">{t("drawer.story")}</Link>{" "}
+          <Link href="/accountability">{t("drawer.accountability")}</Link>{" "}
+          <Link href="/contact">{t("drawer.contact")}</Link>
           <div style={{ marginTop: "22px" }}>
             <Button full href="/give">
-              Donate
+              {t("donate")}
             </Button>
           </div>
         </div>

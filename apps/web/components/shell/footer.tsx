@@ -1,10 +1,12 @@
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 
 // Footer, verbatim from the Approved Design. The legal block stays as `.ph`
 // placeholders: credential values are never invented (BUILD_GUIDE §7); they
 // render from the credentials record once it exists. Policy links point to
 // pages that are still to be designed (TDD Appendix A), as in the mockup.
-export function Footer() {
+export async function Footer() {
+  const t = await getTranslations("Shell.footer");
   return (
     <footer>
       <div className="wrap">
@@ -22,68 +24,68 @@ export function Footer() {
               <br />
               12AB —— · 80G —— · CSR-1 ——
             </span>
-            <br /> FCRA: not registered
+            <br /> {t("fcra")}
           </div>
           <div>
-            <h4>Our work</h4>
+            <h4>{t("ourWork")}</h4>
             <ul>
               <li>
-                <Link href="/work">All four pillars</Link>
+                <Link href="/work">{t("allPillars")}</Link>
               </li>
               <li>
-                <Link href="/work/womens-economic-independence">Women&apos;s independence</Link>
+                <Link href="/work/womens-economic-independence">{t("womensIndependence")}</Link>
               </li>
               <li>
-                <Link href="/projects">Projects</Link>
+                <Link href="/projects">{t("projects")}</Link>
               </li>
               <li>
-                <Link href="/work">How we work</Link>
+                <Link href="/work">{t("howWeWork")}</Link>
               </li>
             </ul>
           </div>
           <div>
-            <h4>Find help</h4>
+            <h4>{t("findHelp")}</h4>
             <ul>
               <li>
-                <Link href="/schemes">Schemes and updates</Link>
+                <Link href="/schemes">{t("schemes")}</Link>
               </li>
               <li>
-                <Link href="/knowledge">Knowledge base</Link>
+                <Link href="/knowledge">{t("knowledge")}</Link>
               </li>
               <li>
-                <Link href="/ask">Ask a question</Link>
+                <Link href="/ask">{t("ask")}</Link>
               </li>
               <li>
-                <Link href="/contact">Request a callback</Link>
+                <Link href="/contact">{t("callback")}</Link>
               </li>
             </ul>
           </div>
           <div>
-            <h4>Accountability</h4>
+            <h4>{t("accountability")}</h4>
             <ul>
               <li>
-                <Link href="/accountability">Registrations</Link>
+                <Link href="/accountability">{t("registrations")}</Link>
               </li>
               <li>
-                <Link href="/accountability">Governance</Link>
+                <Link href="/accountability">{t("governance")}</Link>
               </li>
               <li>
-                <Link href="/accountability">Financials</Link>
+                <Link href="/accountability">{t("financials")}</Link>
               </li>
               <li>
-                <Link href="/accountability">What we haven&apos;t proven</Link>
+                <Link href="/accountability">{t("unproven")}</Link>
               </li>
               <li>
-                <Link href="/contact">Grievance redressal</Link>
+                <Link href="/contact">{t("grievance")}</Link>
               </li>
             </ul>
           </div>
         </div>
         <div className="f-bot">
-          <span>© 2026 Tanmaysaachi Mahila Empower Foundation</span>{" "}
+          <span>{t("copyright")}</span>{" "}
           <span>
-            <a href="#">Privacy</a> &nbsp; <a href="#">Donation policy</a> &nbsp; <a href="#">Refund</a> &nbsp;{" "}
-            <a href="#">Terms</a>
+            <a href="#">{t("privacy")}</a> &nbsp; <a href="#">{t("donationPolicy")}</a> &nbsp;{" "}
+            <a href="#">{t("refund")}</a> &nbsp; <a href="#">{t("terms")}</a>
           </span>
         </div>
       </div>

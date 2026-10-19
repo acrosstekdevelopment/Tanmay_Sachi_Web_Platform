@@ -41,7 +41,7 @@ for (const width of WIDTHS) {
     }
 
     test("shows the chrome for this breakpoint", async ({ page }) => {
-      await page.goto("/");
+      await page.goto("/en");
       const web = width >= 820;
       await expect(page.locator(".webhead")).toBeVisible({ visible: web });
       await expect(page.locator(".mhead")).toBeVisible({ visible: !web });
@@ -54,7 +54,7 @@ test.describe("mobile interactions", () => {
   test.use({ viewport: { width: 375, height: 812 } });
 
   test("drawer opens from the burger and closes on scrim and link tap", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/en");
     const drawer = page.locator("#drawer");
     await page.locator("#burger").click();
     await expect(drawer).toHaveClass(/open/);
@@ -67,14 +67,14 @@ test.describe("mobile interactions", () => {
   });
 
   test("tab bar marks the current tab", async ({ page }) => {
-    await page.goto("/schemes");
+    await page.goto("/en/schemes");
     await expect(page.locator(".tabbar a.on")).toHaveText(/Schemes/);
   });
 });
 
 test.describe("page interactions", () => {
   test("home ask chip fills the box and shows the illustrative answer", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/en");
     await expect(page.locator("#answer")).toBeHidden();
     await page.getByRole("button", { name: "CSR programmes in skilling" }).click();
     await expect(page.locator("#askq")).toHaveValue("CSR programmes in skilling");
@@ -83,7 +83,7 @@ test.describe("page interactions", () => {
   });
 
   test("give amount updates the Funds line", async ({ page }) => {
-    await page.goto("/give");
+    await page.goto("/en/give");
     await expect(page.locator("#what2")).toContainText("digital skills training support for one woman");
     await page.getByRole("button", { name: "₹10,000" }).click();
     await expect(page.locator("#what2")).toContainText("a full training batch of twelve");
@@ -91,7 +91,7 @@ test.describe("page interactions", () => {
   });
 
   test("filter chips are single-select", async ({ page }) => {
-    await page.goto("/schemes");
+    await page.goto("/en/schemes");
     const group = page.getByRole("group", { name: "Filter schemes" });
     await group.getByRole("button", { name: "Open now" }).click();
     await expect(group.locator('[aria-pressed="true"]')).toHaveText("Open now");
