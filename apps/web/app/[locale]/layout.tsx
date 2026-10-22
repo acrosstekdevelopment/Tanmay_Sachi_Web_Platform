@@ -1,39 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Inter_Tight, Noto_Sans_Devanagari } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { hasPublishedContent } from "@/lib/i18n/content";
 import { routing, type Locale } from "@/i18n/routing";
+import { preload } from "react-dom";
+import "../fonts.css";
 import "../globals.css";
 
-// Typefaces from the Approved Design (Google Fonts, SIL Open Font Licence),
-// self-hosted by next/font. Devanagari per TDD §3.
-// adjustFontFallback is off so glyphs the families lack (e.g. "→") fall back
-// exactly as in the mockup (system-ui / Georgia), not to a resized Arial.
-const instrumentSerif = Instrument_Serif({
-  weight: "400",
-  style: ["normal", "italic"],
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  adjustFontFallback: false,
-  variable: "--font-instrument-serif",
-});
-const interTight = Inter_Tight({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  adjustFontFallback: false,
-  variable: "--font-inter-tight",
-});
-const devanagari = Noto_Sans_Devanagari({
-  weight: ["400", "500", "600"],
-  subsets: ["devanagari"],
-  display: "swap",
-  preload: false,
-  adjustFontFallback: false,
-  variable: "--font-devanagari",
-});
+// Typefaces from the Approved Design, self-hosted from public/fonts with the
+// same @font-face rules Google Fonts serves the mockup (app/fonts.css). No
+// build-time download, and glyphs the families lack (e.g. "→") fall back
+// exactly as in the mockup. Preload the Latin files used above the fold.
+const PRELOAD_FONTS = [
+  "/fonts/inter-tight-normal-latin.woff2",
+  "/fonts/instrument-serif-normal-latin.woff2",
+];
 
 // Non-production environments are never indexed (TDD §10.7, ROBOTS_MODE).
 const indexable = process.env.ROBOTS_MODE === "index";
@@ -67,11 +49,9 @@ export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale as Locale);
+  for (const href of PRELOAD_FONTS) preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   return (
-    <html
-      lang={locale}
-      className={`${instrumentSerif.variable} ${interTight.variable} ${devanagari.variable}`}
-    >
+    <html lang={locale}>
       <body>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
