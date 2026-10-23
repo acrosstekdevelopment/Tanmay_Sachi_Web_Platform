@@ -92,5 +92,16 @@
       "refund": "Refund",
       "terms": "Terms"
     }
+  },
+  "Contact": {
+    "sentTitle": "Thank you. Your enquiry has reached us.",
+    "sentBody": "The right person will reply within five working days.",
+    "error": "We could not send your enquiry just now. Please try again in a moment.",
+    "invalid": {
+      "name": "Please tell us your name.",
+      "email": "That email address does not look right.",
+      "message": "Please tell us what you would like to discuss.",
+      "contact": "Please give an email address or a phone number so we can reply."
+    }
   }
 }

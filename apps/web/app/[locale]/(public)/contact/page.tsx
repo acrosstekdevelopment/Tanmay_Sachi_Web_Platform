@@ -1,9 +1,10 @@
 import { Link } from "@/i18n/navigation";
 import type { Metadata } from "next";
-import { Button } from "@/components/ui/primitives";
+import { ContactForm } from "@/components/contact/contact-form";
 
 // Ported verbatim from the Approved Design, page #p-contact.
-// Pass 1 (BUILD_GUIDE §0): static copy from the mockup; data comes in pass 2.
+// Pass 1 (BUILD_GUIDE §0): static copy from the mockup; the enquiry form
+// writes to the leads table (TDD §10.2).
 
 export const metadata: Metadata = { title: "Contact" };
 
@@ -31,72 +32,7 @@ export default function ContactPage() {
         <div className="wrap">
           <div className="two lean">
             <div style={{ maxWidth: "560px" }}>
-              <div className="field">
-                <label htmlFor="ct">
-                  I am getting in touch about
-                </label>
-                {" "}
-                <select id="ct">
-                  <option>
-                    A CSR partnership
-                  </option>
-                  <option>
-                    A government or institutional partnership
-                  </option>
-                  <option>
-                    A grant or foundation enquiry
-                  </option>
-                  <option>
-                    Volunteering or contributing skills
-                  </option>
-                  <option>
-                    Help with a scheme or application
-                  </option>
-                  <option>
-                    Media
-                  </option>
-                  <option>
-                    Something else
-                  </option>
-                </select>
-              </div>
-              <div className="field">
-                <label htmlFor="cn">
-                  Name
-                </label>
-                <input id="cn" />
-              </div>
-              <div className="field">
-                <label htmlFor="co">
-                  Organisation
-                </label>
-                <input id="co" placeholder="If applicable" />
-              </div>
-              <div className="field">
-                <label htmlFor="ce">
-                  Email
-                </label>
-                <input id="ce" type="email" />
-              </div>
-              <div className="field">
-                <label htmlFor="cp">
-                  Phone or WhatsApp
-                </label>
-                <input id="cp" />
-              </div>
-              <div className="field">
-                <label htmlFor="cm">
-                  What would you like to discuss?
-                </label>
-                <textarea id="cm" rows={5} />
-              </div>
-              <p className="small" style={{ marginBottom: "16px" }}>
-                We use these details only to reply to you and, where relevant, to keep a record of the enquiry. We do not share them. You can ask us to delete them at any time by writing to our grievance contact.
-                {/* cms: consent_notice_version stored with the lead */}
-              </p>
-              <Button href="#">
-                Send enquiry
-              </Button>
+              <ContactForm />
               <p className="small" style={{ marginTop: "10px" }}>
                 We reply to every enquiry within five working days.
               </p>
