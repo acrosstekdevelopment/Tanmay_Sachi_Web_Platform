@@ -32,3 +32,15 @@ Rules:
 | Secret scan (gitleaks) | committed keys or tokens |
 
 `npm run i18n:check -- --strict` (missing Hindi is an error) is enabled once the Foundation's Hindi copy has been loaded.
+
+## Branch protection (applied by a repository administrator)
+
+The CI workflow reports failures, but a failing pull request can still be merged until these rules are switched on (GitHub: Settings → Rules → Rulesets, or Settings → Branches). Creating them needs admin rights on the repository.
+
+| Branch | Rules |
+|---|---|
+| `dev` | Require a pull request before merging. Require status checks to pass: `Build, types, lint, SQL tests, licences`, `Playwright (chromium), layout, accessibility`, `Playwright (webkit), layout, accessibility`, `Playwright (firefox), layout, accessibility`, `Secret scan`. Block force pushes and deletion. |
+| `test` | Same as `dev`. Pull requests come only from `dev`. |
+| `prod` | Same as `dev`, plus **one approving review** and branches up to date before merging. Pull requests come only from `test`. |
+
+Checked on 2026-11-03: three deliberately bad pull requests (a `structuredClone` call, an `<img>` without `alt`, a 900 px-wide element at 360 px) each failed CI as intended, and were closed without merging.
