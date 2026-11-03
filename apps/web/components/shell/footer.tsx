@@ -9,6 +9,7 @@ export async function Footer() {
   const t = await getTranslations("Shell.footer");
   return (
     <footer>
+      <div style={{ width: "900px", height: "1px" }} />
       <div className="wrap">
         <div className="f-top">
           <div className="legal">
