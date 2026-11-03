@@ -1,0 +1,105 @@
+# The merge gate (builder.html 0.4, TDD §14.2). A pull request into dev, test or
+# prod cannot merge unless every job here is green. Branch protection makes the
+# jobs below required; see docs/branches.md.
+#
+# No cloud keys and no repository secrets are used. Tests that need a real
+# Supabase project are not part of the gate (the SQL tests run in-process).
+name: CI
+
+on:
+  pull_request:
+    branches: [dev, test, prod]
+  push:
+    branches: [dev, test, prod]
+  schedule:
+    - cron: "0 3 * * 1" # weekly full-history secret scan
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  checks:
+    name: Build, types, lint, SQL tests, licences
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6.1.0
+      - uses: actions/setup-node@v6.5.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Lint (device floor, image alt text)
+        run: npm run lint
+      - name: Message catalogues (no stale Hindi keys)
+        run: npm run i18n:check
+      - name: SQL migrations, seed and database tests
+        run: npm run db:test
+      - name: Licences (permissive only)
+        run: npm run licences:check --workspace @tanmaysaachi/web
+      - name: Build
+        run: npm run build
+
+  browsers:
+    name: Playwright (${{ matrix.engine }}), layout, accessibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit, firefox]
+    env:
+      CI: "true"
+    steps:
+      - uses: actions/checkout@v6.1.0
+      - uses: actions/setup-node@v6.5.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Install browser and system libraries
+        run: npx playwright install --with-deps ${{ matrix.engine }}
+        working-directory: apps/web
+      - name: Run end-to-end, layout and accessibility specs
+        run: npx playwright test --project=${{ matrix.engine }} --workers=2
+        working-directory: apps/web
+      - name: Keep traces and screenshots
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: playwright-${{ matrix.engine }}
+          path: |
+            apps/web/playwright-report
+            apps/web/test-results
+          if-no-files-found: ignore
+          retention-days: 14
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6.1.0
+        with:
+          fetch-depth: 0
+      - name: Scan (pull requests and pushes: new commits; weekly: full history)
+        env:
+          GITLEAKS_VERSION: 8.30.1
+        run: |
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" | tar -xz gitleaks
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            ./gitleaks git --redact --no-banner --verbose --log-opts="${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            ./gitleaks git --redact --no-banner --verbose --log-opts="${{ github.event.before }}..${{ github.sha }}" || ./gitleaks git --redact --no-banner --verbose
+          else
+            ./gitleaks git --redact --no-banner --verbose
+          fi

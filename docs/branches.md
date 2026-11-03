@@ -1,0 +1,34 @@
+# Branches and the merge gate
+
+```
+feature (dev/<name>) ─▶ dev ─▶ test (staging) ─▶ prod
+```
+
+| Branch | Environment | Who changes it | How |
+|---|---|---|---|
+| `dev/<name>` | local | developer | pull request into `dev` |
+| `dev` | development (integration) | developer | merge when CI is green |
+| `test` | staging: Foundation review and acceptance | developer promotes | pull request from `dev`, CI green |
+| `prod` | production, public | developer, **only on the Foundation's written go-ahead** | pull request from `test`, CI green, one approving review |
+| `hotfix/<name>` | from `prod` | developer | fix, full CI, release after acceptance, then merge back into `test` and `dev` |
+
+Rules:
+
+- One direction only: feature → `dev` → `test` → `prod`. No direct commits to `test` or `prod`.
+- Every pull request needs the **CI** workflow green. The required jobs are `Build, types, lint, SQL tests, licences`, `Playwright (chromium|webkit|firefox), layout, accessibility`, and `Secret scan`.
+- Release to `prod` needs the Foundation's written green flag, recorded in the decision log. Exceptions (security patches, defect corrections) release on a green CI with written notice within one working day (TDD v2.0 §15.1).
+- Each environment has its own Supabase project and secrets. See `environments.md`.
+
+## What the gate blocks
+
+| Check | Catches |
+|---|---|
+| `npm run typecheck` | type errors |
+| `npm run lint` | syntax or APIs newer than the Android 7 / iOS 14 floor (`structuredClone`, `.at()`, `Object.hasOwn`, `replaceAll`), images without `alt` |
+| `npm run i18n:check` | Hindi keys that English no longer has |
+| `npm run db:test` | broken migrations, a table without row-level security, the public key reading a base table, any of the seven commitments breaking |
+| `npm run licences:check` | non-permissive production dependencies |
+| Playwright × 3 engines | every page in both languages: no horizontal scroll at 360/375/414/1280 px, no serious accessibility violations, the language switch |
+| Secret scan (gitleaks) | committed keys or tokens |
+
+`npm run i18n:check -- --strict` (missing Hindi is an error) is enabled once the Foundation's Hindi copy has been loaded.

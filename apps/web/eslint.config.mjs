@@ -33,6 +33,9 @@ const eslintConfig = [
     files: ["app/**/*.{ts,tsx}", "components/**/*.{ts,tsx}", "lib/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-syntax": ["error", ...floorBreakingSyntax],
+      // Every image needs alt text (WCAG 2.1 AA; commitment 7 needs it in the database too).
+      // Next's preset only warns; the CI gate must block.
+      "jsx-a11y/alt-text": "error",
     },
   },
 ];

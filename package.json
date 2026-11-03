@@ -16,6 +16,10 @@
     "lint": "npm run lint --workspace @tanmaysaachi/web",
     "typecheck": "npm run typecheck --workspace @tanmaysaachi/web",
     "test:e2e": "npm run test:e2e --workspace @tanmaysaachi/web",
-    "i18n:check": "npm run i18n:check --workspace @tanmaysaachi/web --"
+    "i18n:check": "npm run i18n:check --workspace @tanmaysaachi/web --",
+    "db:test": "node supabase/scripts/pg-dry-run.mjs supabase"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.9"
   }
 }

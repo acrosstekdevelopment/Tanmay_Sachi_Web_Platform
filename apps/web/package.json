@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test",
-    "i18n:check": "node scripts/check-i18n.mjs"
+    "i18n:check": "node scripts/check-i18n.mjs",
+    "licences:check": "node scripts/check-licences.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.117.0",
