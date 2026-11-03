@@ -33,14 +33,19 @@ Rules:
 
 `npm run i18n:check -- --strict` (missing Hindi is an error) is enabled once the Foundation's Hindi copy has been loaded.
 
-## Branch protection (applied by a repository administrator)
+## Branch protection (applied 2026-11-03 as GitHub rulesets)
 
-The CI workflow reports failures, but a failing pull request can still be merged until these rules are switched on (GitHub: Settings → Rules → Rulesets, or Settings → Branches). Creating them needs admin rights on the repository.
+| Branch | Ruleset | What it enforces |
+|---|---|---|
+| `dev` | Protect dev | Pull request required. The five CI checks must pass. No force pushes, no deletion. Repository administrators may push directly (bypass), so day-to-day work by an admin account is not blocked; everyone else needs a pull request. |
+| `test` | Protect test | Same, with **no bypass**. Changes arrive only by pull request from `dev`. |
+| `prod` | Protect prod | Same, plus **one approving review** and the branch must be up to date with its base before merging. No bypass. Changes arrive only by pull request from `test`, and only on the Foundation's written go-ahead. |
 
-| Branch | Rules |
-|---|---|
-| `dev` | Require a pull request before merging. Require status checks to pass: `Build, types, lint, SQL tests, licences`, `Playwright (chromium), layout, accessibility`, `Playwright (webkit), layout, accessibility`, `Playwright (firefox), layout, accessibility`, `Secret scan`. Block force pushes and deletion. |
-| `test` | Same as `dev`. Pull requests come only from `dev`. |
-| `prod` | Same as `dev`, plus **one approving review** and branches up to date before merging. Pull requests come only from `test`. |
+The five required checks are `Build, types, lint, SQL tests, licences`, `Playwright (chromium), layout, accessibility`, `Playwright (firefox), layout, accessibility`, `Playwright (webkit), layout, accessibility` and `Secret scan`.
 
-Checked on 2026-11-03: three deliberately bad pull requests (a `structuredClone` call, an `<img>` without `alt`, a 900 px-wide element at 360 px) each failed CI as intended, and were closed without merging.
+Verified on 2026-11-03:
+
+- three deliberately bad pull requests (a `structuredClone` call, an `<img>` without `alt`, a 900 px-wide element at 360 px) each failed CI as intended and were closed without merging;
+- a direct push to `test` was rejected with "Changes must be made through a pull request".
+
+`main` is the live deployment's source today and is not covered by these rules; it is replaced by `prod` once deployments move to that branch.
